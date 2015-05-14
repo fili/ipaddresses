@@ -19,18 +19,16 @@
 """Processes command line arguments."""
 
 # Python 3 compatibility
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
-import builtins  # Python 3 compatibility
-# import future  # Python 3 compatibility
 # import io  # Python 3 compatibility
 import sys
 
+from builtins import input  # Python 3 compatibility
 import colorama as ansi
 
+import common
 import localization as lcl
 import shared as shrd
 
@@ -45,24 +43,24 @@ def start(argv):
     """Print banner and process args."""
     ansi.init()
 
-    print(shrd.banner())
+    print(common.banner())
 
     if not argv:
         print_ips()
     else:
         arg0 = argv[0]
         if arg0 in ['-h', '--help']:
-            print(shrd.usage())
+            print(common.usage())
         elif arg0 in ['-l', '--license']:
-            print(shrd.license_())
+            print(common.license_())
         elif arg0 in ['-p', '--pause']:
             print_ips()
-            builtins.input(lcl.PRESS_ANY_KEY)
+            input(lcl.PRESS_ANY_KEY)
         elif arg0 in ['-V', '--version']:
-            print(lcl.VERSION, shrd.version())
+            print(lcl.VERSION, common.version())
         else:
             print(ansi.Fore.RED + lcl.WRONG_ARG + arg0 + '\n')
-            print(ansi.Fore.RESET + shrd.usage())
+            print(ansi.Fore.RESET + common.usage())
 
     sys.exit(0)  # ToDo: other return codes
 

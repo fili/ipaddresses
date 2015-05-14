@@ -25,15 +25,13 @@ See usage.txt for command line usage.
 """
 
 # Python 3 compatibility
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
-# import builtins  # Python 3 compatibility
-# import future  # Python 3 compatibility
 # import io  # Python 3 compatibility
 import sys
+
+# from builtins import input  # Python 3 compatibility
 
 import cli
 import gui_tk_func as gui

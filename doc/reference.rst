@@ -7,6 +7,12 @@ cli
 .. automodule:: cli
     :members:
 
+common
+::::::
+
+.. automodule:: common
+    :members:
+
 gui_tk_func
 :::::::::::
 
@@ -29,10 +35,4 @@ shared
 ::::::
 
 .. automodule:: shared
-    :members:
-
-utils
-:::::
-
-.. automodule:: utils
     :members:

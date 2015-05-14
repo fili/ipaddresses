@@ -19,20 +19,35 @@
 """Localization."""
 
 # Python 3 compatibility
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
-# import builtins  # Python 3 compatibility
-# import future  # Python 3 compatibility
 # import io  # Python 3 compatibility
+import locale
+import sys
 
-import utils
+# from builtins import input  # Python 3 compatibility
 
 
-if utils.LANG == 'PT':  # Portuguese
+def sys_lang():
+    """Get system language."""
+    lang = locale.getdefaultlocale()
+    # lang = 'EN'  # only for testing
+    if 'pt_' in lang[0]:  # Portuguese
+        return 'PT'
+    else:  # English
+        return 'EN'
+
+LANG = sys_lang()
+
+FS_ENC = sys.getfilesystemencoding()
+INPUT_ENC = sys.stdin.encoding
+UTF_ENC = 'utf-8'
+
+if LANG == 'PT':  # Portuguese
     ABOUT = 'Sobre'
+    BANNER = ' não tem QUALQUER GARANTIA. É software livre e você está ' + \
+             'autorizado a redistribui-lo dentro de certas condições.'
     EXIT = 'Sair'
     FILE = 'Ficheiro'
     HELP = 'Ajuda'
@@ -45,6 +60,8 @@ if utils.LANG == 'PT':  # Portuguese
     WRONG_ARG = 'Erro: argumento incorreto '
 else:  # English
     ABOUT = 'About'
+    BANNER = ' comes with ABSOLUTELY NO WARRANTY. This is free software, ' + \
+             'and you are welcome to redistribute it under certain conditions.'
     EXIT = 'Exit'
     FILE = 'File'
     HELP = 'Help'
