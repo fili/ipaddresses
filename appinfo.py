@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -18,15 +17,7 @@
 
 """Application basic information."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
 import datetime as dt
-# import io  # Python 3 compatibility
-
-# from builtins import input  # Python 3 compatibility
-
 
 APP_NAME = 'ipaddresses'
 APP_VERSION = '0.0.2'
@@ -36,28 +27,31 @@ APP_EMAIL = 'jcrmatos@gmail.com'
 APP_URL = 'https://github.com/jcrmatos/ipaddresses'
 APP_KEYWORDS = 'ip address private public'
 
-# change classifiers to be correct for your application/module
-CLASSIFIERS = ['Development Status :: 4 - Beta',
-               'Environment :: Console',
-               'Environment :: MacOS X',
-               'Environment :: Other Environment',
-               'Environment :: Win32 (MS Windows)',
-               'Environment :: X11 Applications',
-               'Intended Audience :: End Users/Desktop',
-               'License :: OSI Approved ::' + ' ' + APP_LICENSE,
-               'Natural Language :: English',
-               'Natural Language :: Portuguese',
-               'Operating System :: OS Independent',
-               'Programming Language :: Python',
-               'Programming Language :: Python :: 2',
-               'Programming Language :: Python :: 2.7',
-               'Programming Language :: Python :: 3',
-               'Programming Language :: Python :: 3.4',
-               'Topic :: System :: Networking']
+CLASSIFIERS = [
+    'Development Status :: 4 - Beta',
+    'Environment :: Console',
+    'Environment :: MacOS X',
+    'Environment :: Other Environment',
+    'Environment :: Win32 (MS Windows)',
+    'Environment :: X11 Applications',
+    'Intended Audience :: End Users/Desktop',
+    'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
+    'Natural Language :: English',
+    'Natural Language :: Portuguese',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Topic :: System :: Networking'
+]
 
-COPYRIGHT = 'Copyright 2009-' + str(dt.date.today().year) + ' ' + APP_AUTHOR
+COPYRIGHT = f'Copyright 2009-{dt.date.today().year} {APP_AUTHOR}'
 
-APP_TYPE = 'application'  # it can be application or module
+APP_TYPE = 'application'  # could also be 'module'
 
 README_FILE = 'README.rst'
 REQUIREMENTS_FILE = 'requirements.txt'

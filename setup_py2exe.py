@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -16,98 +15,86 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Setup for py2exe."""
+"""Setup script for building a py2exe Windows executable."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        )  # unicode_literals)
-# the previous import is commented due to random Unicode errors
-
-import glob
-import io  # Python 3 compatibility
 import os
 import sys
+import glob
+import io
 
-# from builtins import input  # Python 3 compatibility
 from setuptools import setup, find_packages
-import py2exe  # must be after setuptools
+import py2exe  # Must follow setuptools import
 
 import appinfo
 
-
 UTF_ENC = 'utf-8'
 
+# Read long description from README file
 DESC = LONG_DESC = ''
 if os.path.isfile(appinfo.README_FILE):
-    with io.open(appinfo.README_FILE, encoding=UTF_ENC) as f_in:
-        LONG_DESC = f_in.read()
-        DESC = LONG_DESC.split('\n')[3]
+    with io.open(appinfo.README_FILE, encoding=UTF_ENC) as f:
+        LONG_DESC = f.read()
+        DESC = LONG_DESC.split('\n')[3] if len(
+            LONG_DESC.split('\n')) > 3 else ''
 
-# PACKAGES = [appinfo.APP_NAME]  # use only if find_packages() doesn't work
-
-REQUIREMENTS = ''
+# Read dependencies
+REQUIREMENTS = []
 if os.path.isfile(appinfo.REQUIREMENTS_FILE):
-    with io.open(appinfo.REQUIREMENTS_FILE, encoding=UTF_ENC) as f_in:
-        REQUIREMENTS = f_in.read().splitlines()
+    with io.open(appinfo.REQUIREMENTS_FILE, encoding=UTF_ENC) as f:
+        REQUIREMENTS = f.read().splitlines()
 
+# Script and data setup
 PATH = appinfo.APP_NAME + '/'
 SCRIPT = PATH + appinfo.APP_NAME + '.py'
 
 DATA_FILES = [('', glob.glob(PATH + '*.txt'))]
 
-if os.path.isdir(appinfo.APP_NAME + '/doc'):
-    DATA_FILES += [('doc', glob.glob(PATH + 'doc/.*') +
-                    glob.glob(PATH + 'doc/*.html') +
-                    glob.glob(PATH + 'doc/*.pdf') +
-                    glob.glob(PATH + 'doc/*.inv') +
-                    glob.glob(PATH + 'doc/*.js')),
-                   ('doc/_modules', glob.glob(PATH + 'doc/_modules/*.*')),
-                   ('doc/_sources', glob.glob(PATH + 'doc/_sources/*.*')),
-                   ('doc/_static', glob.glob(PATH + 'doc/_static/*.*'))]
+# Include documentation files if they exist
+doc_path = os.path.join(PATH, 'doc')
+if os.path.isdir(doc_path):
+    DATA_FILES.extend([
+        ('doc', glob.glob(os.path.join(doc_path, '*'))),
+        ('doc/_modules', glob.glob(os.path.join(doc_path, '_modules', '*.*'))),
+        ('doc/_sources', glob.glob(os.path.join(doc_path, '_sources', '*.*'))),
+        ('doc/_static', glob.glob(os.path.join(doc_path, '_static', '*.*')))
+    ])
 
-OPTIONS = {'py2exe': {'compressed': True,
-                      'ascii': False,
-                      # 'packages': ['colorama'],
-                      # 'bundle_files': 1,  # exe does not work
-                      # 'includes': ['colorama'],
-                      # 'excludes': ['doctest', 'pdb', 'unittest', 'difflib',
-                      #              'inspect', 'pyreadline', 'optparse',
-                      #              'calendar', 'email', '_ssl',
-                      #              # 'locale', 'pickle'
-                      #              ]
-                      }
-           }
+# Py2exe options
+OPTIONS = {
+    'py2exe': {
+        'compressed': True,
+        'ascii': False,
+        # Customize if needed:
+        # 'packages': ['colorama'],
+        # 'includes': ['colorama'],
+        # 'bundle_files': 1,
+        # 'excludes': ['doctest', 'pdb', 'unittest', 'difflib', ...]
+    }
+}
 
-# add modules_dir to PYTHONPATH so all modules inside it are included
-# in py2exe library
+# Add module directory to path for py2exe to discover packages
 sys.path.insert(1, appinfo.APP_NAME)
 
-setup(name=appinfo.APP_NAME,
-      version=appinfo.APP_VERSION,
-      description=DESC,
-      long_description=LONG_DESC,
-      license=appinfo.APP_LICENSE,
-      url=appinfo.APP_URL,
-      author=appinfo.APP_AUTHOR,
-      author_email=appinfo.APP_EMAIL,
+setup(
+    name=appinfo.APP_NAME,
+    version=appinfo.APP_VERSION,
+    description=DESC,
+    long_description=LONG_DESC,
+    license=appinfo.APP_LICENSE,
+    url=appinfo.APP_URL,
+    author=appinfo.APP_AUTHOR,
+    author_email=appinfo.APP_EMAIL,
+    classifiers=appinfo.CLASSIFIERS,
+    keywords=appinfo.APP_KEYWORDS,
 
-      classifiers=appinfo.CLASSIFIERS,
-      keywords=appinfo.APP_KEYWORDS,
-
-      packages=find_packages(),
-      # packages=setuptools.find_packages(exclude=['docs',
-      #                                           'tests*']),
-
-      # use only if find_packages() doesn't work
-      # packages=PACKAGES,
-      # package_dir={'': appinfo.APP_NAME},
-
-      install_requires=REQUIREMENTS,
-
-      console=[SCRIPT],
-      options=OPTIONS,
-      data_files=DATA_FILES,
-      # windows=[{'script': appinfo.APP_NAME + '.py',
-      #           'icon_resources': [(0, appinfo.APP_NAME + '.ico')]
-      #          }],
-      )
+    packages=find_packages(),
+    install_requires=REQUIREMENTS,
+    console=[SCRIPT],
+    options=OPTIONS,
+    data_files=DATA_FILES,
+    # Optional GUI build:
+    # windows=[{
+    #     'script': SCRIPT,
+    #     'icon_resources': [(0, f"{appinfo.APP_NAME}.ico")]
+    # }],
+)

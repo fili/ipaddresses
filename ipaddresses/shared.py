@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -18,29 +17,23 @@
 
 """Shared constants and functions between CLI and GUI modules."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-# import io  # Python 3 compatibility
 import socket
-
-# from builtins import input  # Python 3 compatibility
-from future.moves.urllib.request import urlopen  # Python 3 compatibility
+import urllib.request
 
 
 def get_private_ip():
-    """Get private IP address."""
+    """Get the machine's private IP address."""
     return socket.gethostbyname(socket.gethostname())
 
 
 def get_public_ip():
-    """Get public IP address."""
-    data = str(urlopen('http://www.realip.info/api/p/realip.php').read())
-    return data.split('"')[3]
+    """Fetch the machine's public IP address."""
+    try:
+        with urllib.request.urlopen("https://ip.app/", timeout=5) as response:
+            return response.read().strip().decode("utf-8")
+    except Exception as e:
+        raise RuntimeError(f"Failed to fetch public IP: {e}")
 
 
 if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod(verbose=True)
     pass

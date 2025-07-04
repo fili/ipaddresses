@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -16,27 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Localization."""
+"""Localization module."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-# import io  # Python 3 compatibility
 import locale
 import sys
-
-# from builtins import input  # Python 3 compatibility
 
 
 def sys_lang():
     """Get system language."""
     lang = locale.getdefaultlocale()
-    # lang = 'EN'  # only for testing
-    if 'pt_' in lang[0]:  # Portuguese
+    if lang and 'pt_' in lang[0].lower():
         return 'PT'
-    else:  # English
-        return 'EN'
+    return 'EN'
+
 
 LANG = sys_lang()
 
@@ -44,10 +35,12 @@ FS_ENC = sys.getfilesystemencoding()
 INPUT_ENC = sys.stdin.encoding
 UTF_ENC = 'utf-8'
 
-if LANG == 'PT':  # Portuguese
+if LANG == 'PT':
     ABOUT = 'Sobre'
-    BANNER = ' não tem QUALQUER GARANTIA. É software livre e você está ' + \
-             'autorizado a redistribui-lo dentro de certas condições.'
+    BANNER = (
+        ' não tem QUALQUER GARANTIA. É software livre e você está '
+        'autorizado a redistribui-lo dentro de certas condições.'
+    )
     EXIT = 'Sair'
     FILE = 'Ficheiro'
     HELP = 'Ajuda'
@@ -58,10 +51,12 @@ if LANG == 'PT':  # Portuguese
     VERSION_WITH_SPACES = ' versão '
     WIN_TITLE = 'Endereços IP'
     WRONG_ARG = 'Erro: argumento incorreto '
-else:  # English
+else:
     ABOUT = 'About'
-    BANNER = ' comes with ABSOLUTELY NO WARRANTY. This is free software, ' + \
-             'and you are welcome to redistribute it under certain conditions.'
+    BANNER = (
+        ' comes with ABSOLUTELY NO WARRANTY. This is free software, '
+        'and you are welcome to redistribute it under certain conditions.'
+    )
     EXIT = 'Exit'
     FILE = 'File'
     HELP = 'Help'
@@ -75,6 +70,4 @@ else:  # English
 
 
 if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod(verbose=True)
     pass

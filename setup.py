@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -16,72 +15,52 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Setup for source, egg, wheel, wininst, msi and dumb distributions."""
+"""Setup for source, wheel, and other distribution formats."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-import io  # Python 3 compatibility
 import os
-
-# from builtins import input  # Python 3 compatibility
+import io
 from setuptools import setup, find_packages
-
 import appinfo
-
 
 UTF_ENC = 'utf-8'
 
+# Load long description from README file
 DESC = LONG_DESC = ''
 if os.path.isfile(appinfo.README_FILE):
     with io.open(appinfo.README_FILE, encoding=UTF_ENC) as f_in:
         LONG_DESC = f_in.read()
-        DESC = LONG_DESC.split('\n')[3]
+        DESC = LONG_DESC.split('\n')[3] if len(
+            LONG_DESC.split('\n')) > 3 else ''
 
-# PACKAGES = [appinfo.APP_NAME]  # use only if find_packages() doesn't work
-
-REQUIREMENTS = ''
+# Load requirements
+REQUIREMENTS = []
 if os.path.isfile(appinfo.REQUIREMENTS_FILE):
     with io.open(appinfo.REQUIREMENTS_FILE, encoding=UTF_ENC) as f_in:
         REQUIREMENTS = f_in.read().splitlines()
 
-ENTRY_POINTS = {'console_scripts': [appinfo.APP_NAME + '=' +
-                                    appinfo.APP_NAME + '.' +
-                                    appinfo.APP_NAME + ':main'],
-                # 'gui_scripts' : ['app_gui=' + appinfo.APP_NAME + '.' +
-                #                  appinfo.APP_NAME + ':start']
-                }
+# CLI entry point
+ENTRY_POINTS = {
+    'console_scripts': [
+        f"{appinfo.APP_NAME}={appinfo.APP_NAME}.{appinfo.APP_NAME}:main"
+    ],
+    # GUI entry point example (commented):
+    # 'gui_scripts': [f"{appinfo.APP_NAME}_gui={appinfo.APP_NAME}.{appinfo.APP_NAME}:start"]
+}
 
-setup(name=appinfo.APP_NAME,
-      version=appinfo.APP_VERSION,
-      description=DESC,
-      long_description=LONG_DESC,
-      license=appinfo.APP_LICENSE,
-      url=appinfo.APP_URL,
-      author=appinfo.APP_AUTHOR,
-      author_email=appinfo.APP_EMAIL,
+setup(
+    name=appinfo.APP_NAME,
+    version=appinfo.APP_VERSION,
+    description=DESC,
+    long_description=LONG_DESC,
+    license=appinfo.APP_LICENSE,
+    url=appinfo.APP_URL,
+    author=appinfo.APP_AUTHOR,
+    author_email=appinfo.APP_EMAIL,
+    classifiers=appinfo.CLASSIFIERS,
+    keywords=appinfo.APP_KEYWORDS,
 
-      classifiers=appinfo.CLASSIFIERS,
-      keywords=appinfo.APP_KEYWORDS,
-
-      packages=find_packages(),
-      # packages=setuptools.find_packages(exclude=['docs',
-      #                                            'tests*']),
-
-      # use only if find_packages() doesn't work
-      # packages=PACKAGES,
-      # package_dir={'': appinfo.APP_NAME},
-
-      # to create an executable
-      entry_points=ENTRY_POINTS,
-
-      install_requires=REQUIREMENTS,
-
-      # used only if the package is not in PyPI, but exists as an
-      # egg, sdist format or as a single .py file
-      # see http://goo.gl/OgnjhO
-      # dependency_links = ['http://host.domain.local/dir/'],
-
-      include_package_data=True,  # use MANIFEST.in during install
-      )
+    packages=find_packages(),
+    include_package_data=True,
+    install_requires=REQUIREMENTS,
+    entry_points=ENTRY_POINTS,
+)

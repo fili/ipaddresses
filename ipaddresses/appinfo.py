@@ -18,14 +18,7 @@
 
 """Application basic information."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
 import datetime as dt
-# import io  # Python 3 compatibility
-
-# from builtins import input  # Python 3 compatibility
 
 
 APP_NAME = 'ipaddresses'
@@ -49,10 +42,11 @@ CLASSIFIERS = ['Development Status :: 4 - Beta',
                'Natural Language :: Portuguese',
                'Operating System :: OS Independent',
                'Programming Language :: Python',
-               'Programming Language :: Python :: 2',
-               'Programming Language :: Python :: 2.7',
                'Programming Language :: Python :: 3',
-               'Programming Language :: Python :: 3.4',
+               'Programming Language :: Python :: 3.10',
+               'Programming Language :: Python :: 3.11',
+               'Programming Language :: Python :: 3.12',
+               'Programming Language :: Python :: 3.13',
                'Topic :: System :: Networking']
 
 COPYRIGHT = 'Copyright 2009-' + str(dt.date.today().year) + ' ' + APP_AUTHOR

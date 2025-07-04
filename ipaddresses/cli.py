@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -18,14 +17,7 @@
 
 """Processes command line arguments."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-# import io  # Python 3 compatibility
 import sys
-
-from builtins import input  # Python 3 compatibility
 import colorama as ansi
 
 import common
@@ -66,6 +58,4 @@ def start(argv):
 
 
 if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod(verbose=True)
-    pass
+    start(sys.argv[1:])

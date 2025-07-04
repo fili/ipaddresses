@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -18,25 +17,14 @@
 
 """GUI using tkinter."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-# import io  # Python 3 compatibility
 import sys
 import tkinter as tk
 import tkinter.messagebox as tk_msg_box
-
-# from builtins import input  # Python 3 compatibility
+import tkinter.ttk as tk_ttk
 
 import common
 import localization as lcl
 import shared as shrd
-
-if common.PY < 3:
-    import ttk as tk_ttk
-else:
-    import tkinter.ttk as tk_ttk
 
 
 def start():
@@ -48,7 +36,7 @@ def start():
         sys.exit(0)  # ToDo: other return codes
 
     def center(window):
-        """Center window."""
+        """Center the window on screen."""
         window.update_idletasks()
         width = window.winfo_width()
         frm_width = window.winfo_rootx() - window.winfo_x()
@@ -58,7 +46,7 @@ def start():
         win_height = height + titlebar_height + frm_width
         x = window.winfo_screenwidth() // 2 - win_width // 2
         y = window.winfo_screenheight() // 2 - win_height // 2
-        window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+        window.geometry(f'{width}x{height}+{x}+{y}')
         if window.attributes('-alpha') == 0:
             window.attributes('-alpha', 1.0)
         window.deiconify()
@@ -72,25 +60,12 @@ def start():
     root = tk.Tk()
     root.withdraw()
     win = tk.Toplevel(root)
-
-    # for exit confirmation
     win.protocol('WM_DELETE_WINDOW', exit_gui)
-
     win.title(lcl.WIN_TITLE)
-
-    # not resizable
     win.resizable(False, False)
-
-    # resizable (limits)
-    # win.minsize(250, 125)
-    # win.maxsize(500, 250)
-
-    # needed by center function?
-    # win.attributes('-alpha', 0.0)
-
     win.bind('<F1>', show_help)
 
-    # menu
+    # Menus
     win.option_add('*tearOff', False)
     menubar = tk.Menu(win)
     win.config(menu=menubar)
@@ -102,47 +77,27 @@ def start():
 
     filemenu.add_command(label=lcl.EXIT, underline=0, command=exit_gui)
 
-    helpmenu.add_command(label=lcl.HELP, underline=0, command=show_help,
-                         accelerator='F1')
+    helpmenu.add_command(label=lcl.HELP, underline=0,
+                         command=show_help, accelerator='F1')
     helpmenu.add_separator()
     helpmenu.add_command(label=lcl.ABOUT, underline=0, state='disabled')
 
-    # ToDo: log menu item
-    # filemenu.add_separator()
-    # check = StringVar(value=1)
-    # filemenu.add_checkbutton(label='Log', variable=check, onvalue=1,
-    #                          offvalue=0)
-
+    # Content Frame
     frame = tk_ttk.Frame(win, padding='3 3 3 3')
     frame.grid(column=0, row=0, sticky='WNES')
-
-    # if the main window is resized, the frame should expand
-    # frame.columnconfigure(0, weight=1)
-    # frame.rowconfigure(0, weight=1)
 
     private_lbl = tk.StringVar(value=lcl.PRIVATE_IP + shrd.get_private_ip())
     public_lbl = tk.StringVar(value=lcl.PUBLIC_IP + shrd.get_public_ip())
 
-    # 1st row
     tk_ttk.Label(frame, textvariable=private_lbl).grid(column=1, row=1)
-
-    # 2nd row
     tk_ttk.Label(frame, textvariable=public_lbl).grid(column=1, row=2)
 
-    # remove if windows is non resizable
-    # tk_ttk.Sizegrip(frame).grid(column=999, row=999, sticky=(E,S))
-
-    # padding around all widgets
     for widget in frame.winfo_children():
         widget.grid_configure(padx=5, pady=5)
 
-    # center window
     center(win)
-
     root.mainloop()
 
 
 if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod(verbose=True)
     pass

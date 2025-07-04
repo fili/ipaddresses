@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -19,19 +18,12 @@
 """
 Show private and public IP addresses.
 
-If there are any command line arguments it calls the cli module.
-Otherwise the gui module.
+If there are any command line arguments it calls the CLI module.
+Otherwise the GUI module.
 See usage.txt for command line usage.
 """
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-# import io  # Python 3 compatibility
 import sys
-
-# from builtins import input  # Python 3 compatibility
 
 import cli
 import gui_tk_func as gui
@@ -47,6 +39,4 @@ def main():
 
 
 if __name__ == '__main__':
-    # import doctest
-    # doctest.testmod(verbose=True)
     sys.exit(main())

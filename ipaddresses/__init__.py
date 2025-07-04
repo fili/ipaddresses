@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 
 # Copyright 2009-2015 Joao Carlos Roseta Matos
 #
@@ -18,16 +17,8 @@
 
 """Package initialization file."""
 
-# Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
-# import io  # Python 3 compatibility
 import os
 import sys
 
-# from builtins import input  # Python 3 compatibility
-
-
-# add to PYTHONPATH, used by Sphinx doc system
+# Add current directory to PYTHONPATH for Sphinx doc system
 sys.path.insert(1, os.path.dirname(__file__))
